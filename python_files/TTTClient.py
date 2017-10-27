@@ -1,8 +1,11 @@
 import socket
+import time
 from .TTTBoard import TTTBoard
+
 
 def print_debug(*args):
     print('\nClient says: \t', ''.join([str(x) for x in args]))
+
 
 class TTTClient:
     def __init__(self, host, port):
@@ -15,10 +18,13 @@ class TTTClient:
                 connected = True
             except ConnectionRefusedError:
                 print_debug('connection was refused...')
-        self.message_log = [].extend(self._sock.recv(2048).split('\n'))
-
-        while '<X>' not in self.message_log or '<O>' not in self.message_log:
-            self.message_log.extend(self._sock.recv(2048).split('\n'))
+        self.message_log = []
+        self.message_log.extend(self.recv(2048).split('\n'))
+        print_debug('message_log ', self.message_log)
+        while '<X>' not in self.message_log and '<O>' not in self.message_log:
+            time.sleep(0.5)
+            self.message_log.extend(self.recv(2048).split('\n'))
+            print('message_log: ', self.message_log)
 
         self.value = 'X' if '<X>' in self.message_log else 'O'
         self.board_value = 2 if self.value == 'X' else 1
@@ -26,6 +32,11 @@ class TTTClient:
 
         self.board = TTTBoard()
         print_debug('Client has connected and been assigned socket name', self._sock.getsockname())
+
+    def recv(self, no_bytes):
+        recv_value = self._sock.recv(no_bytes).decode()
+        print_debug('Client received', recv_value)
+        return recv_value
 
     def close(self):
         self._sock.close()
@@ -35,6 +46,9 @@ class TTTClient:
 
     def end_game(self):
         pass
+
+    def sendall(self, message):
+        self._sock.sendall(bytes((str(message) + '\n').encode('utf-8')))
 
     def run_game(self):
         game_over = False
@@ -58,7 +72,7 @@ class TTTClient:
         # server sends board representation
         move = self._sock.recv(2048).decode()
         self.board.make_move(int(move), 'X' if self.value == 'O' else 'O')
-        print_debug(self.board.get_print_debugable_board())
+        print_debug(self.board.get_printable_board())
         if self.board.detect_winner():
             print_debug('You lost!')
             return -1
@@ -74,16 +88,16 @@ class TTTClient:
         except ValueError:
             self.get_input()
 
-    def my_turn(self):
+    def my_turn(self, input_method=lambda: 0):
         # change this to get a different type of input
-        inp = self.get_input()
+        inp = input_method()
         if 0 <= inp <= 9 and inp in self.board.get_available_squares():
-            self.board[inp] = self.board_value
+            self.board.make_move(int(inp), 'O' if self.value == 'O' else 'O')
         else:
-            self.get_input()
+            self.my_turn(input_method)
         # send input to server
-        self._sock.sendall(inp)
-        print_debug(self.board.get_print_debugable_board())
+        self.sendall(inp)
+        print_debug('I am {}\n'.format(self), self.board.get_printable_board())
 
         if self.board.detect_winner():
             print_debug('You won!')

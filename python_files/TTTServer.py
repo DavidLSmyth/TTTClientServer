@@ -12,14 +12,13 @@ class TTTSocketServer:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self._sock.bind((host, port))
+        self.users = []
 
 
     def start(self):
         self._sock.listen(2)
         print_debug('Server listening for connections at ', self._sock.getsockname())
         # allow two users to connect
-        self.users = []
-
         while len(self.users) < 2:
             print_debug('Server waiting for connection {} at address {}'.format(len(self.users), (self._sock.getsockname())))
             sc, sockname = self._sock.accept()
@@ -39,14 +38,15 @@ class TTTSocketServer:
         self._sock.close()
 
     def encode_message(self, message):
-        return bytes((message+'\n').encode('utf-8'))
+        return bytes((str(message)+'\n').encode('utf-8'))
 
     def send_message_all_users(self, message):
         for user in self.users:
             user.sendall(message)
 
-    def run_game(self):
-        while not self.board.detect_winner():
+    def run_game(self, steps=5):
+        step_counter = 0
+        while not self.board.detect_winner() and step_counter < steps:
             for user in self.users:
                 self.take_turn(user)
                 if self.board.detect_winner():
@@ -55,13 +55,16 @@ class TTTSocketServer:
                     self.users[0].update_board()
                     self.users[1].update_board()
                     # deal with detected winner here
+            step_counter += 1
 
     def take_turn(self, user):
-        my_turn = user.recv(2048).decode()
+        user_turn = user.recv(2048).decode()
         print_debug('Attempting to take turn')
         try:
-            my_turn = int(my_turn)
-            if not self.board.make_move(my_turn):
+            user_turn = int(user_turn)
+            if not self.board.make_move(user_turn):
                 user.send('Invalid move. Try again')
+            else:
+                print(user,' took move ', user_turn)
         except ValueError:
             print_debug('could not convert int to value')

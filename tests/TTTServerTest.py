@@ -4,7 +4,7 @@ import threading
 from python_files.TTTServer import TTTSocketServer
 from python_files.TTTClient import TTTClient
 
-class TestTTTBoard(unittest.TestCase):
+class TestTTTConnection(unittest.TestCase):
 
     def setUp(self):
         print('running setup')
@@ -16,8 +16,15 @@ class TestTTTBoard(unittest.TestCase):
         print('Thread1 running')
         server = TTTSocketServer('localhost', 10000)
         server.start()
-        print('closing server')
-        server.close()
+
+    def setUpGame(self, no_rounds):
+        print('setting up a game')
+        t1 = threading.Thread(target=self.run_game,no_rounds)
+        t1.start()
+
+    def run_game(self):
+        server = TTTSocketServer('localhost', 10000)
+        server.start()
 
     def connect_sockets(self, users_result):
         '''creates raw sockets that attempt to connect to the server'''
@@ -52,25 +59,65 @@ class TestTTTBoard(unittest.TestCase):
         return
 
     def connect_client(self):
-        print('Attempting to set up client 1')
-        client1 = TTTClient()
+        print('Attempting to set up client')
+        client1 = TTTClient('localhost', 10000)
         print('Closing client1')
         client1.close()
 
-
+    def run_client(self):
+        client1 = TTTClient('localhost', 10000)
+        client1.my_turn(lambda: 0 if client1.value == 'X' else 1)
+        client1.other_player_turn()
+        client1.close()
+        #client1.
     # def test_fake(self):
     #     pass
-    def test_connect_sockets_test_proxy(self):
-        '''Ensures that a socket can connect to the server'''
-        users_result = []
-        t2 = threading.Thread(target=self.connect_sockets, args=(users_result,))
-        t2.start()
-        #wait for clients to exit before server can exit
-        t2.join()
-        self.assertTrue(all(users_result))
-
+    # def test_connect_sockets_test_proxy(self):
+    #     '''Ensures that a socket can connect to the server'''
+    #     users_result = []
+    #     t2 = threading.Thread(target=self.connect_sockets, args=(users_result,))
+    #     t2.start()
+    #     #wait for clients to exit before server can exit
+    #     t2.join()
+    #     self.assertTrue(all(users_result))
+    #
+    #     print('closing server')
+    #     self.server.close()
+    #
     # def test_TTT_Client_connect(self):
-    #     t2 = threading.Thread(target = self.connect_client)
+    #     print('Running test_TTT_Client_connect\n\n\n')
+    #     t2 = threading.Thread(target=self.connect_client)
+    #     t3 = threading.Thread(target=self.connect_client)
+    #     print('Running Client Thread1')
+    #     t2.start()
+    #     print('Running Client Tread2')
+    #     t3.start()
+    #     t2.join()
+    #     t3.join()
+    #     #t2.join()
+    #
+    #     print('closing server')
+    #     self.server.close()
+
+    def test_TTT_round(self):
+        print('Running a test round of TTT \n\n')
+        t2 = threading.Thread(target=self.run_client)
+        t3 = threading.Thread(target=self.run_client)
+
+
+        t2.start()
+        t3.start()
+
+        #signals to server that client will make a move
+        #self.server.take_turn(self.server.users[0])
+        #self.server.take_turn(self.server.users[0])
+        t2.join()
+        t3.join()
+        print('TTTBoard: ', self.server.board.get_printable_board())
+
+        print('closing server')
+        self.server.close()
+
 
 
 if __name__ == '__main__':

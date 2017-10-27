@@ -2,16 +2,15 @@ import unittest
 import socket
 import threading
 from python_files.TTTServer import TTTSocketServer
-
+from python_files.TTTClient import TTTClient
 
 class TestTTTBoard(unittest.TestCase):
 
     def setUp(self):
-         print('running setup')
-         t1 = threading.Thread(target=self.connect_server)
-    #     t2 = threading.Thread(target=self.connect_sockets)
-    #     t2.start()
-         t1.start()
+        print('running setup')
+        #allows sockets to connect to server
+        t1 = threading.Thread(target=self.connect_server)
+        t1.start()
 
     def connect_server(self):
         print('Thread1 running')
@@ -52,19 +51,27 @@ class TestTTTBoard(unittest.TestCase):
         print('Closed user sockets')
         return
 
+    def connect_client(self):
+        print('Attempting to set up client 1')
+        client1 = TTTClient()
+        print('Closing client1')
+        client1.close()
+
+
     # def test_fake(self):
     #     pass
     def test_connect_sockets_test_proxy(self):
         '''Ensures that a socket can connect to the server'''
         users_result = []
-        #t1 = threading.Thread(target=self.connect_server)
         t2 = threading.Thread(target=self.connect_sockets, args=(users_result,))
-        #t1.start()
         t2.start()
         #wait for clients to exit before server can exit
         t2.join()
-        #t1.join()
         self.assertTrue(all(users_result))
+
+    # def test_TTT_Client_connect(self):
+    #     t2 = threading.Thread(target = self.connect_client)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -6,28 +6,32 @@ def print_debug(*args):
 
 class TTTClient:
     def __init__(self, host, port):
-        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print_debug('Socket attempting to connect to host {}, port {}'.format(host, port))
         connected = False
         while not connected:
             try:
-                self.sock.connect((host, port))
+                self._sock.connect((host, port))
                 connected = True
             except ConnectionRefusedError:
                 print_debug('connection was refused...')
+        self.message_log = [].extend(self._sock.recv(2048).split('\n'))
 
-        first_message = self.sock.recv(2048)
-        print_debug(first_message)
-        second_message = self.sock.recv(2048)
-        print_debug(second_message)
-        if first_message == 'Waiting for other players to connect.' and second_message == 'StartGame':
-            x_or_o = self.sock.recv(2048)
-            self.value = x_or_o if x_or_o in ['X', 'O'] else None
-            self.board_value = 2 if self.value == 'X' else 1
+        while '<X>' not in self.message_log or '<O>' not in self.message_log:
+            self.message_log.extend(self._sock.recv(2048).split('\n'))
+
+        self.value = 'X' if '<X>' in self.message_log else 'O'
+        self.board_value = 2 if self.value == 'X' else 1
+        print_debug('Value for user: ', self)
 
         self.board = TTTBoard()
-        print_debug('Client has connected and been assigned socket name', sock.getsockname())
-        self.run_game()
+        print_debug('Client has connected and been assigned socket name', self._sock.getsockname())
+
+    def close(self):
+        self._sock.close()
+
+    def __str__(self):
+        return self.value
 
     def end_game(self):
         pass
@@ -52,7 +56,7 @@ class TTTClient:
     def other_player_turn(self):
         print_debug('Waiting for other player to move')
         # server sends board representation
-        move = self.sock.recv(2048).decode()
+        move = self._sock.recv(2048).decode()
         self.board.make_move(int(move), 'X' if self.value == 'O' else 'O')
         print_debug(self.board.get_print_debugable_board())
         if self.board.detect_winner():
@@ -78,7 +82,7 @@ class TTTClient:
         else:
             self.get_input()
         # send input to server
-        self.sock.sendall(inp)
+        self._sock.sendall(inp)
         print_debug(self.board.get_print_debugable_board())
 
         if self.board.detect_winner():

@@ -9,11 +9,9 @@ class TestTTTBoard(unittest.TestCase):
     def setUp(self):
         print('running setup')
         t1 = threading.Thread(target=self.connect_server)
-        t2 = threading.Thread(target=self.connect_sockets_test)
+        t2 = threading.Thread(target=self.connect_sockets)
         t2.start()
         t1.start()
-        t2.join()
-        t1.join()
 
     def connect_server(self):
         print('Thread1 running')
@@ -22,7 +20,7 @@ class TestTTTBoard(unittest.TestCase):
         print('closing server')
         server.close()
 
-    def connect_sockets_test(self):
+    def connect_sockets(self):
         '''creates raw sockets that attempt to connect to the server'''
         print('Thread2 running, waiting to connect')
         user1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

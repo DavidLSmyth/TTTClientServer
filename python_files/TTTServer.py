@@ -16,7 +16,7 @@ class TTTSocketServer:
 
     def start(self):
         self._sock.listen(2)
-        print_debug('Server listening for connections at', self._sock.getsockname())
+        print_debug('Server listening for connections at ', self._sock.getsockname())
         # allow two users to connect
         self.users = []
 

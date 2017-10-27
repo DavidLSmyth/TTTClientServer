@@ -30,6 +30,8 @@ class TTTSocketServer:
         self.send_message_all_users(self.encode_message('StartGame'))
 
         self.user_values = {self.users[0]: 'X', self.users[1]: 'O'}
+
+        #assign user1 and user2 values of X or O
         self.users[0].sendall(self.encode_message('<X>'))
         self.users[1].sendall(self.encode_message('<O>'))
 

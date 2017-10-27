@@ -27,8 +27,8 @@
       <file leaf-file-name="TTTServer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+            <state relative-caret-position="306">
+              <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -61,8 +61,8 @@
       <file leaf-file-name="TTTServerTest.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tests/TTTServerTest.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="60" selection-end-column="19" />
+            <state relative-caret-position="374">
+              <caret line="43" column="46" lean-forward="false" selection-start-line="43" selection-start-column="46" selection-end-line="43" selection-end-column="46" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -261,34 +261,34 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 43m 26s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 55m 12s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 43m 38s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 55m 29s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 43m 45s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 57m 35s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 44m 22s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 58m 16s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 44m 31s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 59m 00s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 44m 45s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 59m 30s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 45m 15s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 13h 00m 18s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 50m 56s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 13h 00m 31s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 51m 54s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 13h 01m 46s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 12h 52m 26s.xml">
+    <history-entry file="Unittests_for_TTTServerTest_TestTTTBoard - 2017.10.27 at 13h 02m 46s.xml">
       <configuration name="Unittests for TTTServerTest.TestTTTBoard" configurationId="tests" />
     </history-entry>
   </component>
@@ -299,7 +299,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26011944" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34070796" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34070796" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -383,14 +383,6 @@
     <entry file="file://$PROJECT_DIR$/TTTClient.py" />
     <entry file="file://$PROJECT_DIR$/RunClient.py" />
     <entry file="file://$PROJECT_DIR$/TTTServer.py" />
-    <entry file="file://$PROJECT_DIR$/tests/TTTBoardTest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="5" lean-forward="false" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/python_files/RunClient.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -409,10 +401,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/tests/TTTBoardTest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="5" lean-forward="false" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="26" column="14" lean-forward="true" selection-start-line="26" selection-start-column="14" selection-end-line="26" selection-end-column="14" />
+        <state relative-caret-position="306">
+          <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="48" selection-end-line="33" selection-end-column="48" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -421,8 +421,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/TTTServerTest.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="53" column="0" lean-forward="false" selection-start-line="53" selection-start-column="0" selection-end-line="60" selection-end-column="19" />
+        <state relative-caret-position="374">
+          <caret line="43" column="46" lean-forward="false" selection-start-line="43" selection-start-column="46" selection-end-line="43" selection-end-column="46" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

@@ -57,6 +57,8 @@ class TTTSocketServer:
                     break
                     # deal with detected winner here
             step_counter += 1
+        print('{} won!'.format(self.board.detect_winner()))
+        self.close()
 
     def take_turn(self, user):
         user_sock = user[0]
@@ -75,5 +77,6 @@ class TTTSocketServer:
 
                 other_user = list(filter(lambda x: x != user, self.users))[0][0]
                 other_user.sendall(self.encode_message(user_turn))
+
         except ValueError:
             print_debug('could not convert int to value')

@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f9f6097-5cbe-4fc5-937e-e50391dcc5b4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/RunClient.py" afterPath="$PROJECT_DIR$/python_files/RunClient.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/RunServer.py" afterPath="$PROJECT_DIR$/python_files/RunServer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/TTTBoard.py" afterPath="$PROJECT_DIR$/python_files/TTTBoard.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/TTTClient.py" afterPath="$PROJECT_DIR$/python_files/TTTClient.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/TTTServer.py" afterPath="$PROJECT_DIR$/python_files/TTTServer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/TTTBoardTest.py" afterPath="$PROJECT_DIR$/tests/TTTBoardTest.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/TTTServerTest.py" afterPath="$PROJECT_DIR$/tests/TTTServerTest.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -33,10 +26,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TTTBoard.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TTTBoard.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python_files/TTTBoard.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
+            <state relative-caret-position="-102">
               <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
               <folding />
             </state>
@@ -46,8 +39,8 @@
       <file leaf-file-name="TTTServer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="207">
-              <caret line="50" column="38" lean-forward="true" selection-start-line="50" selection-start-column="38" selection-end-line="50" selection-end-column="38" />
+            <state relative-caret-position="511">
+              <caret line="68" column="8" lean-forward="false" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -75,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TTTClient.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TTTClient.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/python_files/TTTClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="513">
-              <caret line="88" column="39" lean-forward="false" selection-start-line="88" selection-start-column="39" selection-end-line="88" selection-end-column="39" />
+            <state relative-caret-position="300">
+              <caret line="63" column="21" lean-forward="false" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -131,10 +124,10 @@
         <option value="$PROJECT_DIR$/tests/TTTServerTest.py" />
         <option value="$PROJECT_DIR$/python_files/RunClient.py" />
         <option value="$PROJECT_DIR$/python_files/RunServer.py" />
-        <option value="$PROJECT_DIR$/python_files/TTTServer.py" />
-        <option value="$PROJECT_DIR$/python_files/TTTClient.py" />
         <option value="$PROJECT_DIR$/tests/TTTBoardTest.py" />
         <option value="$PROJECT_DIR$/python_files/TTTBoard.py" />
+        <option value="$PROJECT_DIR$/python_files/TTTServer.py" />
+        <option value="$PROJECT_DIR$/python_files/TTTClient.py" />
       </list>
     </option>
   </component>
@@ -354,8 +347,8 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32867134" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4848485" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32867134" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4848485" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -577,26 +570,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python_files/TTTClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="88" column="39" lean-forward="false" selection-start-line="88" selection-start-column="39" selection-end-line="88" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="50" column="38" lean-forward="true" selection-start-line="50" selection-start-column="38" selection-end-line="50" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tests/TTTBoardTest.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="309">
@@ -609,9 +582,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/python_files/TTTBoard.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
+        <state relative-caret-position="-102">
           <caret line="24" column="25" lean-forward="false" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="511">
+          <caret line="68" column="8" lean-forward="false" selection-start-line="68" selection-start-column="8" selection-end-line="68" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python_files/TTTClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="63" column="21" lean-forward="false" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -45,7 +45,9 @@ class TTTClient:
         return self.value
 
     def end_game(self):
-        pass
+        print('Game is over, closing socket')
+        print('Goodbye!')
+        self.close()
 
     def sendall(self, message):
         print('sending message to server: {}'.format(str(message)))
@@ -57,17 +59,13 @@ class TTTClient:
         # O always goes first
         if self.value == 'X':
             other_player_turn = self.other_player_turn()
-            if other_player_turn == -1:
-                self.end_game()
-        while not game_over:
+        while True:
             if self.my_turn() == -1:
-                game_over = True
-                self.end_game()
-            # other player turn
-            other_player_turn = self.other_player_turn()
-            if other_player_turn == -1:
-                game_over = True
-                self.end_game()
+                break
+            if self.other_player_turn() == -1:
+                break
+        self.end_game()
+
 
     def other_player_turn(self):
         print_debug('Waiting for other player to move')
@@ -80,7 +78,7 @@ class TTTClient:
             return -1
 
     def get_input(self):
-        inp = input('Please enter a valid move: ')
+        inp = input('Please enter a valid move in range: \n{}\n'.format(self.board.get_available_squares()))
         try:
             inp = int(inp)
             if 0 <= inp <= 9:
@@ -88,7 +86,7 @@ class TTTClient:
             else:
                 return self.get_input()
         except ValueError:
-            self.get_input()
+            return self.get_input()
 
     def my_turn(self, input_method=None):
         # change this to get a different type of input
@@ -96,7 +94,7 @@ class TTTClient:
             input_method = self.get_input
         inp = input_method()
         if 0 <= inp <= 9 and inp in self.board.get_available_squares():
-            self.board.make_move(int(inp), 'O' if self.value == 'O' else 'O')
+            self.board.make_move(int(inp), self.value)
         else:
             self.my_turn(input_method)
         # send input to server

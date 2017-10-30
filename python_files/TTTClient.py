@@ -37,7 +37,11 @@ class TTTClient:
     def recv(self, no_bytes):
         recv_value = self._sock.recv(no_bytes).decode()
         print_debug('Client received: ', recv_value)
-        return recv_value
+        if recv_value == 'Game exiting':
+            print('Game finished prematurely')
+            self.close()
+        else:
+            return recv_value
 
     def close(self):
         self._sock.close()

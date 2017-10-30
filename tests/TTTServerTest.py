@@ -26,10 +26,13 @@ class TestTTTConnection(unittest.TestCase):
     #     t1.start()
     #     t1.join()
 
-    def run_game(self, no_rounds):
+    def run_game(self, no_rounds, board_status: list = None):
         server = TTTSocketServer('localhost', 10000)
         server.start()
         server.run_game(no_rounds)
+        if board_status == []:
+            board_status.append(server.board)
+
 
     def connect_sockets(self, users_result):
         '''creates raw sockets that attempt to connect to the server'''
@@ -48,16 +51,16 @@ class TestTTTConnection(unittest.TestCase):
             user2_messages.extend(user2.recv(2048).decode().split('\n'))
             print('user2 messages: {}'.format(user2_messages))
 
-        user1_messages = set(''.join(user1_messages).split('\n'))
-        user2_messages = set(''.join(user2_messages).split('\n'))
+        user1_messages = set(user1_messages)
+        user2_messages = set(user2_messages)
         print('user1 messages: {}'.format(user1_messages))
         print(set(user1_messages))
         print('user2 messages: {}'.format(user2_messages))
         print(set(user2_messages))
 
         #no idea why '' needs to be present...
-        res1 = set(user1_messages) == {'Waiting for other players to connect.', 'StartGame', '<X>', ''}
-        res2 = set(user2_messages) == {'Waiting for other players to connect.', 'StartGame', '<O>', ''}
+        res1 = set(user1_messages) == {'Waiting for other players to connect.', 'StartGame', 'X' if 'X' in user1_messages else 'O', ''}
+        res2 = set(user2_messages) == {'Waiting for other players to connect.', 'StartGame', 'X' if 'X' in user2_messages else 'O', ''}
         print(res1, res2)
         users_result.append(res1)
         users_result.append(res2)
@@ -72,7 +75,7 @@ class TestTTTConnection(unittest.TestCase):
         print('Closing client1')
         client1.close()
 
-    def run_client(self):
+    def run_client_step(self):
         client = TTTClient('localhost', 10000)
         import time
         time.sleep(1)
@@ -84,6 +87,39 @@ class TestTTTConnection(unittest.TestCase):
             client.my_turn(lambda: 0)
 
         print(client.board.get_printable_board())
+        client.close()
+
+    def run_client_game(self):
+        client = TTTClient('localhost', 10000)
+        import time
+        time.sleep(1)
+        if client.value == 'O':
+            time.sleep(1)
+            client.my_turn(lambda: 3)
+            time.sleep(1)
+            client.other_player_turn()
+            time.sleep(1)
+            client.my_turn(lambda: 8)
+            time.sleep(1)
+            client.other_player_turn()
+            time.sleep(1)
+            client.my_turn(lambda: 5)
+            time.sleep(1)
+            client.other_player_turn()
+        else:
+            time.sleep(1)
+            client.other_player_turn()
+            time.sleep(1)
+            client.my_turn(lambda: 0)
+            time.sleep(1)
+            client.other_player_turn()
+            time.sleep(1)
+            client.my_turn(lambda: 1)
+            time.sleep(1)
+            client.other_player_turn()
+            time.sleep(1)
+            client.my_turn(lambda: 2)
+
         client.close()
 
     # def test_fake(self):
@@ -132,9 +168,10 @@ class TestTTTConnection(unittest.TestCase):
     #
     def test_TTT_round(self):
         print('\n--------------------------\nRunning a test round of TTT \n')
-        t1 = threading.Thread(target=self.run_game, args=(1,))
-        t2 = threading.Thread(target=self.run_client)
-        t3 = threading.Thread(target=self.run_client)
+        board = []
+        t1 = threading.Thread(target=self.run_game, args=(1, board))
+        t2 = threading.Thread(target=self.run_client_step)
+        t3 = threading.Thread(target=self.run_client_step)
 
         t2.start()
         t3.start()
@@ -142,13 +179,31 @@ class TestTTTConnection(unittest.TestCase):
         t1.start()
         t1.join()
 
-        #signals to server that client will make a move
-        #self.server.take_turn(self.server.users[0])
-        #self.server.take_turn(self.server.users[0])
         t2.join()
         t3.join()
-        #print('TTTBoard: ', self.server.board.get_printable_board())
 
+        self.assertEqual(board[0]._squares, [1, 0, 0, 2, 0, 0, 0, 0, 0])
+        print('closing server')
+        #self.server.close()
+
+    def test_TTT_game(self):
+        print('\n--------------------------\nRunning a test game of TTT \n')
+        board = []
+        t1 = threading.Thread(target=self.run_game, args=(10, board))
+        t2 = threading.Thread(target=self.run_client_game)
+        t3 = threading.Thread(target=self.run_client_game)
+
+        t2.start()
+        t3.start()
+
+        t1.start()
+        t1.join()
+
+        t2.join()
+        t3.join()
+
+        self.assertEqual(board[0]._squares, [1, 1, 1, 2, 0, 2, 0, 0, 2])
+        self.assertTrue(board[0].detect_winner(), 'X')
         print('closing server')
         #self.server.close()
 

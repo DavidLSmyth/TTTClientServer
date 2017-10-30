@@ -19,8 +19,9 @@ class TestTTTConnection(unittest.TestCase):
 
     def setUpGame(self, no_rounds):
         print('setting up a game')
-        t1 = threading.Thread(target=self.run_game,args = no_rounds)
+        t1 = threading.Thread(target=self.run_game, args=no_rounds)
         t1.start()
+        t1.join()
 
     def run_game(self):
         server = TTTSocketServer('localhost', 10000)
@@ -68,7 +69,8 @@ class TestTTTConnection(unittest.TestCase):
         client1 = TTTClient('localhost', 10000)
         client1.my_turn(lambda: 0 if client1.value == 'X' else 1)
         client1.other_player_turn()
-        client1.close()
+        print(client1.board.get_printable_board())
+        #client1.close()
         #client1.
 
     # def test_fake(self):
@@ -101,24 +103,24 @@ class TestTTTConnection(unittest.TestCase):
         print('closing server')
         #self.server.close()
     #
-    # def test_TTT_round(self):
-    #     print('Running a test round of TTT \n\n')
-    #     t2 = threading.Thread(target=self.run_client)
-    #     t3 = threading.Thread(target=self.run_client)
-    #
-    #
-    #     t2.start()
-    #     t3.start()
-    #
-    #     #signals to server that client will make a move
-    #     #self.server.take_turn(self.server.users[0])
-    #     #self.server.take_turn(self.server.users[0])
-    #     t2.join()
-    #     t3.join()
-    #     print('TTTBoard: ', self.server.board.get_printable_board())
-    #
-    #     print('closing server')
-    #     self.server.close()
+    def test_TTT_round(self):
+        print('Running a test round of TTT \n\n')
+        t2 = threading.Thread(target=self.run_client)
+        t3 = threading.Thread(target=self.run_client)
+
+
+        t2.start()
+        t3.start()
+
+        #signals to server that client will make a move
+        #self.server.take_turn(self.server.users[0])
+        #self.server.take_turn(self.server.users[0])
+        t2.join()
+        t3.join()
+        #print('TTTBoard: ', self.server.board.get_printable_board())
+
+        print('closing server')
+        #self.server.close()
 
 
 

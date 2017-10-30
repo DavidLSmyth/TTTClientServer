@@ -14,7 +14,19 @@ class TTTBoard:
         return list(filter(lambda x: self._squares[x] == 0, range(len(self._squares))))
 
     def detect_winner(self):
-        pass
+        win = [[0, 1, 2],
+                 [3, 4, 5],
+                 [6, 7, 8],
+                 [0, 4, 8],
+                 [2, 4, 6],
+                 [0, 3, 6],
+                 [1, 4, 7],
+                 [2, 5, 8]]
+        for combo in win:
+            if {self._squares[i] for i in combo} in [{1}, {2}]:
+                return 'X' if self._squares[combo[0]] == 1 else 'O'
+        else:
+            return False
 
     def get_printable_board(self):
         '''Given a list [0/1/2, 0/1/2, ... 0/1/2] prints a representation of the board'''

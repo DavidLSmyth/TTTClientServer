@@ -1,6 +1,6 @@
 import socket
 import time
-from .TTTBoard import TTTBoard
+from TTTBoard import TTTBoard
 
 
 def print_debug(*args):
@@ -21,12 +21,12 @@ class TTTClient:
         self.message_log = []
         self.message_log.extend(self.recv(2048).split('\n'))
         print_debug('message_log ', self.message_log)
-        while '<X>' not in self.message_log and '<O>' not in self.message_log:
+        while 'X' not in self.message_log and 'O' not in self.message_log:
             time.sleep(0.5)
             self.message_log.extend(self.recv(2048).split('\n'))
             print('message_log: ', self.message_log)
 
-        self.value = 'X' if '<X>' in self.message_log else 'O'
+        self.value = 'X' if 'X' in self.message_log else 'O'
         self.board_value = 2 if self.value == 'X' else 1
         print_debug('Value for user: ', self)
 
@@ -48,9 +48,11 @@ class TTTClient:
         pass
 
     def sendall(self, message):
+        print('sending message to server: {}'.format(str(message)))
         self._sock.sendall(bytes((str(message) + '\n').encode('utf-8')))
 
     def run_game(self):
+        '''Once the game has been set up, runs until winner found'''
         game_over = False
         # O always goes first
         if self.value == 'X':
@@ -88,8 +90,10 @@ class TTTClient:
         except ValueError:
             self.get_input()
 
-    def my_turn(self, input_method=lambda: 0):
+    def my_turn(self, input_method=None):
         # change this to get a different type of input
+        if not input_method:
+            input_method = self.get_input
         inp = input_method()
         if 0 <= inp <= 9 and inp in self.board.get_available_squares():
             self.board.make_move(int(inp), 'O' if self.value == 'O' else 'O')

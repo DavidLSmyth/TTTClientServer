@@ -38,6 +38,7 @@ class TTTSocketServer:
         # self.users[1].sendall(self.encode_message('<X>'))
 
     def close(self):
+        print('Shutting down. Bye!')
         self._sock.close()
 
     def encode_message(self, message):
@@ -57,7 +58,10 @@ class TTTSocketServer:
                     break
                     # deal with detected winner here
             step_counter += 1
-        print('{} won!'.format(self.board.detect_winner()))
+        if step_counter < steps:
+            print('{} won!'.format(self.board.detect_winner()))
+        else:
+            print('Game exceeded steps {}'.format(step_counter))
         self.close()
 
     def take_turn(self, user):

@@ -41,7 +41,7 @@ class TTTBoard:
                 return ' '
 
         newline = ' ---' + ' --- ' + '--- '
-        string = newline + '\n'
+        string = '\n' + newline + '\n'
         for row in range(3):
             string += '| '
             for column in range(3):

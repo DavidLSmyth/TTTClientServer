@@ -12,21 +12,22 @@ class TTTClient:
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print_debug('Socket attempting to connect to host {}, port {}'.format(host, port))
         connected = False
+        self.received_moves = []
         while not connected:
             try:
                 self._sock.connect((host, port))
                 connected = True
             except ConnectionRefusedError:
                 print_debug('connection was refused...')
-        self.message_log = []
-        self.message_log.extend(self.recv(2048).split('\n'))
-        print_debug('message_log ', self.message_log)
-        while 'X' not in self.message_log and 'O' not in self.message_log:
+        self.message_buffer = []
+        self.message_buffer.extend(self.recv(2048).split('\n'))
+        print_debug('message_buffer ', self.message_buffer)
+        while 'X' not in self.message_buffer and 'O' not in self.message_buffer:
             time.sleep(0.5)
-            self.message_log.extend(self.recv(2048).split('\n'))
-            print('message_log: ', self.message_log)
+            self.message_buffer.extend(self.recv(2048).split('\n'))
+            print('message_buffer: ', self.message_buffer)
 
-        self.value = 'X' if 'X' in self.message_log else 'O'
+        self.value = 'X' if 'X' in self.message_buffer else 'O'
         self.board_value = 2 if self.value == 'X' else 1
         print_debug('Value for user: ', self)
 
@@ -35,7 +36,7 @@ class TTTClient:
 
     def recv(self, no_bytes):
         recv_value = self._sock.recv(no_bytes).decode()
-        print_debug('Client received', recv_value)
+        print_debug('Client received: ', recv_value)
         return recv_value
 
     def close(self):
@@ -70,6 +71,7 @@ class TTTClient:
     def other_player_turn(self):
         print_debug('Waiting for other player to move')
         # server sends board representation
+        #check if move data has already been sent
         move = self._sock.recv(2048).decode()
         self.board.make_move(int(move), 'X' if self.value == 'O' else 'O')
         print_debug(self.board.get_printable_board())
@@ -92,6 +94,7 @@ class TTTClient:
         # change this to get a different type of input
         if not input_method:
             input_method = self.get_input
+        #input_method must return an int
         inp = input_method()
         if 0 <= inp <= 9 and inp in self.board.get_available_squares():
             self.board.make_move(int(inp), self.value)

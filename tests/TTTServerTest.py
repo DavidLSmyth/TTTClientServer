@@ -19,7 +19,7 @@ class TestTTTConnection(unittest.TestCase):
 
     def setUpGame(self, no_rounds):
         print('setting up a game')
-        t1 = threading.Thread(target=self.run_game,no_rounds)
+        t1 = threading.Thread(target=self.run_game,args = no_rounds)
         t1.start()
 
     def run_game(self):
@@ -70,53 +70,55 @@ class TestTTTConnection(unittest.TestCase):
         client1.other_player_turn()
         client1.close()
         #client1.
+
     # def test_fake(self):
     #     pass
-    # def test_connect_sockets_test_proxy(self):
-    #     '''Ensures that a socket can connect to the server'''
-    #     users_result = []
-    #     t2 = threading.Thread(target=self.connect_sockets, args=(users_result,))
-    #     t2.start()
-    #     #wait for clients to exit before server can exit
-    #     t2.join()
-    #     self.assertTrue(all(users_result))
-    #
-    #     print('closing server')
-    #     self.server.close()
-    #
-    # def test_TTT_Client_connect(self):
-    #     print('Running test_TTT_Client_connect\n\n\n')
-    #     t2 = threading.Thread(target=self.connect_client)
-    #     t3 = threading.Thread(target=self.connect_client)
-    #     print('Running Client Thread1')
-    #     t2.start()
-    #     print('Running Client Tread2')
-    #     t3.start()
-    #     t2.join()
-    #     t3.join()
-    #     #t2.join()
-    #
-    #     print('closing server')
-    #     self.server.close()
 
-    def test_TTT_round(self):
-        print('Running a test round of TTT \n\n')
-        t2 = threading.Thread(target=self.run_client)
-        t3 = threading.Thread(target=self.run_client)
-
-
+    def test_connect_sockets_test_proxy(self):
+        '''Ensures that a socket can connect to the server'''
+        users_result = []
+        t2 = threading.Thread(target=self.connect_sockets, args=(users_result,))
         t2.start()
-        t3.start()
-
-        #signals to server that client will make a move
-        #self.server.take_turn(self.server.users[0])
-        #self.server.take_turn(self.server.users[0])
+        #wait for clients to exit before server can exit
         t2.join()
-        t3.join()
-        print('TTTBoard: ', self.server.board.get_printable_board())
+        self.assertTrue(all(users_result))
 
         print('closing server')
-        self.server.close()
+        #self.server.close()
+
+    def test_TTT_Client_connect(self):
+        print('Running test_TTT_Client_connect\n\n\n')
+        t2 = threading.Thread(target=self.connect_client)
+        t3 = threading.Thread(target=self.connect_client)
+        print('Running Client Thread1')
+        t2.start()
+        print('Running Client Tread2')
+        t3.start()
+        t2.join()
+        t3.join()
+        #t2.join()
+
+        print('closing server')
+        #self.server.close()
+    #
+    # def test_TTT_round(self):
+    #     print('Running a test round of TTT \n\n')
+    #     t2 = threading.Thread(target=self.run_client)
+    #     t3 = threading.Thread(target=self.run_client)
+    #
+    #
+    #     t2.start()
+    #     t3.start()
+    #
+    #     #signals to server that client will make a move
+    #     #self.server.take_turn(self.server.users[0])
+    #     #self.server.take_turn(self.server.users[0])
+    #     t2.join()
+    #     t3.join()
+    #     print('TTTBoard: ', self.server.board.get_printable_board())
+    #
+    #     print('closing server')
+    #     self.server.close()
 
 
 

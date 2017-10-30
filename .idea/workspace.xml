@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f9f6097-5cbe-4fc5-937e-e50391dcc5b4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/TTTClient.py" afterPath="$PROJECT_DIR$/python_files/TTTClient.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/python_files/TTTServer.py" afterPath="$PROJECT_DIR$/python_files/TTTServer.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/TTTServerTest.py" afterPath="$PROJECT_DIR$/tests/TTTServerTest.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,13 +35,25 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TTTServer.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="TTTServer.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-82">
-              <caret line="64" column="60" lean-forward="false" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
+            <state relative-caret-position="190">
+              <caret line="80" column="55" lean-forward="false" selection-start-line="80" selection-start-column="55" selection-end-line="80" selection-end-column="55" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ClientGUI.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/python_files/ClientGUI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="136">
+              <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -72,8 +82,8 @@
       <file leaf-file-name="TTTClient.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/python_files/TTTClient.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="41" column="24" lean-forward="true" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+            <state relative-caret-position="150">
+              <caret line="96" column="4" lean-forward="true" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="41" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -132,6 +142,7 @@
         <option value="$PROJECT_DIR$/tests/TTTServerTest.py" />
         <option value="$PROJECT_DIR$/python_files/TTTClient.py" />
         <option value="$PROJECT_DIR$/python_files/TTTServer.py" />
+        <option value="$PROJECT_DIR$/python_files/ClientGUI.py" />
       </list>
     </option>
   </component>
@@ -198,7 +209,24 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in TTTServerTest.py">
+  <component name="RunManager" selected="Python.ClientGUI">
+    <configuration name="ClientGUI" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/python_files" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="TTT" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/python_files/ClientGUI.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+    </configuration>
     <configuration name="RunServer (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -250,20 +278,6 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <configuration name="Unittests for TTTServerTest.TestTTTBoard" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="TTT" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;TTTServerTest.TestTTTBoard&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-    </configuration>
     <configuration name="Unittests in TTTServerTest.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -281,17 +295,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.TTTBoardTest" />
       <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in TTTServerTest.py" />
-      <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for TTTServerTest.TestTTTBoard" />
-      <item index="3" class="java.lang.String" itemvalue="Python.TTTServer" />
-      <item index="4" class="java.lang.String" itemvalue="Python.RunServer (1)" />
+      <item index="2" class="java.lang.String" itemvalue="Python.TTTServer" />
+      <item index="3" class="java.lang.String" itemvalue="Python.RunServer (1)" />
+      <item index="4" class="java.lang.String" itemvalue="Python.ClientGUI" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in TTTServerTest.py" />
-        <item index="1" class="java.lang.String" itemvalue="Python.TTTBoardTest" />
-        <item index="2" class="java.lang.String" itemvalue="Python.RunServer (1)" />
-        <item index="3" class="java.lang.String" itemvalue="Python.TTTServer" />
-        <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests for TTTServerTest.TestTTTBoard" />
+        <item index="0" class="java.lang.String" itemvalue="Python.ClientGUI" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in TTTServerTest.py" />
+        <item index="2" class="java.lang.String" itemvalue="Python.TTTBoardTest" />
+        <item index="3" class="java.lang.String" itemvalue="Python.RunServer (1)" />
+        <item index="4" class="java.lang.String" itemvalue="Python.TTTServer" />
       </list>
     </recent_temporary>
   </component>
@@ -312,9 +326,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_TTTServerTest_py - 2017.10.30 at 20h 04m 16s.xml">
-      <configuration name="Unittests in TTTServerTest.py" configurationId="tests" />
-    </history-entry>
     <history-entry file="Unittests_in_TTTServerTest_py - 2017.10.30 at 20h 04m 49s.xml">
       <configuration name="Unittests in TTTServerTest.py" configurationId="tests" />
     </history-entry>
@@ -340,6 +351,9 @@
       <configuration name="Unittests in TTTServerTest.py" configurationId="tests" />
     </history-entry>
     <history-entry file="Unittests_in_TTTServerTest_py - 2017.10.30 at 20h 19m 18s.xml">
+      <configuration name="Unittests in TTTServerTest.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_TTTServerTest_py - 2017.10.30 at 20h 57m 45s.xml">
       <configuration name="Unittests in TTTServerTest.py" configurationId="tests" />
     </history-entry>
   </component>
@@ -612,22 +626,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python_files/RunServer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/python_files/RunClient.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="21" lean-forward="false" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/python_files/TTTBoard.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="731">
@@ -656,22 +654,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python_files/TTTClient.py">
+    <entry file="file://$PROJECT_DIR$/python_files/ClientGUI">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="41" column="24" lean-forward="true" selection-start-line="41" selection-start-column="24" selection-end-line="41" selection-end-column="24" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="80" column="55" lean-forward="false" selection-start-line="80" selection-start-column="55" selection-end-line="80" selection-end-column="55" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/python_files/TTTServer.py">
+    <entry file="file://$PROJECT_DIR$/python_files/RunClient.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="64" column="60" lean-forward="false" selection-start-line="64" selection-start-column="60" selection-end-line="64" selection-end-column="60" />
+        <state relative-caret-position="68">
+          <caret line="4" column="21" lean-forward="false" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python_files/RunServer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="21" lean-forward="false" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python_files/TTTClient.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="96" column="4" lean-forward="true" selection-start-line="96" selection-start-column="4" selection-end-line="96" selection-end-column="41" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/python_files/ClientGUI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="11" column="40" lean-forward="true" selection-start-line="11" selection-start-column="40" selection-end-line="11" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
           </folding>
         </state>
       </provider>

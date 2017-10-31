@@ -5,7 +5,7 @@ import sys
 sys.path.append('../python_files')
 from python_files.TTTServer import TTTSocketServer
 from python_files.TTTClient import TTTClient
-
+from python_files.util import get_block, put_block
 
 class TestTTTConnection(unittest.TestCase):
 
@@ -34,6 +34,7 @@ class TestTTTConnection(unittest.TestCase):
             board_status.append(server.board)
 
 
+
     def connect_sockets(self, users_result):
         '''creates raw sockets that attempt to connect to the server'''
         print('Thread2 running, waiting to connect')
@@ -44,11 +45,11 @@ class TestTTTConnection(unittest.TestCase):
         print('user1 and user2 have connected')
         user1_messages = []
         user2_messages = []
-        while 'X' not in user1_messages and 'O' not in user1_messages:
-            user1_messages.extend(user1.recv(2048).decode().split('\n'))
+        while b'X' not in user1_messages and b'O' not in user1_messages:
+            user1_messages.append(get_block(user1))
             print('user1 messages: {}'.format(user1_messages))
-        while 'O' not in user2_messages and 'X' not in user2_messages:
-            user2_messages.extend(user2.recv(2048).decode().split('\n'))
+        while b'O' not in user2_messages and b'X' not in user2_messages:
+            user2_messages.append(get_block(user2))
             print('user2 messages: {}'.format(user2_messages))
 
         user1_messages = set(user1_messages)
@@ -59,11 +60,15 @@ class TestTTTConnection(unittest.TestCase):
         print(set(user2_messages))
 
         #no idea why '' needs to be present...
-        res1 = set(user1_messages) == {'Waiting for other players to connect.', 'StartGame', 'X' if 'X' in user1_messages else 'O', ''}
-        res2 = set(user2_messages) == {'Waiting for other players to connect.', 'StartGame', 'X' if 'X' in user2_messages else 'O', ''}
+        res1 = set(user1_messages) == {b'Waiting for other players', b'StartGame', b'X' if b'X' in user1_messages else b'O'}
+        res2 = set(user2_messages) == {b'Waiting for other players', b'StartGame', b'X' if b'X' in user2_messages else b'O'}
         print(res1, res2)
         users_result.append(res1)
         users_result.append(res2)
+
+        users_result.append(get_block(user1) == b'Exiting')
+        users_result.append(get_block(user2) == b'Exiting')
+
         user1.close()
         user2.close()
         print('Closed user sockets')
@@ -72,52 +77,41 @@ class TestTTTConnection(unittest.TestCase):
     def connect_client(self):
         print('Attempting to set up client')
         client1 = TTTClient('localhost', 10000)
+
+        client1.other_player_turn()
         print('Closing client1')
         client1.close()
 
     def run_client_step(self):
         client = TTTClient('localhost', 10000)
-        import time
-        time.sleep(1)
-        if client.value == 'O':
+        if client.value == b'O':
             client.my_turn(lambda: 3)
             client.other_player_turn()
         else:
             client.other_player_turn()
             client.my_turn(lambda: 0)
 
+        #get exiting message
+        client.other_player_turn()
         print(client.board.get_printable_board())
         client.close()
 
     def run_client_game(self):
         client = TTTClient('localhost', 10000)
         import time
-        time.sleep(1)
-        if client.value == 'O':
-            time.sleep(1)
+        if client.value == b'O':
             client.my_turn(lambda: 3)
-            time.sleep(1)
             client.other_player_turn()
-            time.sleep(1)
             client.my_turn(lambda: 8)
-            time.sleep(1)
             client.other_player_turn()
-            time.sleep(1)
             client.my_turn(lambda: 5)
-            time.sleep(1)
             client.other_player_turn()
         else:
-            time.sleep(1)
             client.other_player_turn()
-            time.sleep(1)
             client.my_turn(lambda: 0)
-            time.sleep(1)
             client.other_player_turn()
-            time.sleep(1)
             client.my_turn(lambda: 1)
-            time.sleep(1)
             client.other_player_turn()
-            time.sleep(1)
             client.my_turn(lambda: 2)
 
         client.close()
@@ -145,7 +139,6 @@ class TestTTTConnection(unittest.TestCase):
 
     def test_TTT_Client_connect(self):
         print('Running test_TTT_Client_connect\n')
-#        self.setUpGame(0)
 
         t1 = threading.Thread(target=self.run_game, args=(0,))
 
@@ -161,10 +154,8 @@ class TestTTTConnection(unittest.TestCase):
 
         t2.join()
         t3.join()
-        #t2.join()
 
         print('closing server\n')
-        #self.server.close()
     #
     def test_TTT_round(self):
         print('\n--------------------------\nRunning a test round of TTT \n')
@@ -184,7 +175,6 @@ class TestTTTConnection(unittest.TestCase):
 
         self.assertEqual(board[0]._squares, [1, 0, 0, 2, 0, 0, 0, 0, 0])
         print('closing server')
-        #self.server.close()
 
     def test_TTT_game(self):
         print('\n--------------------------\nRunning a test game of TTT \n')
@@ -205,7 +195,6 @@ class TestTTTConnection(unittest.TestCase):
         self.assertEqual(board[0]._squares, [1, 1, 1, 2, 0, 2, 0, 0, 2])
         self.assertTrue(board[0].detect_winner(), 'X')
         print('closing server')
-        #self.server.close()
 
 
 

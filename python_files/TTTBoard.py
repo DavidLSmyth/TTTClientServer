@@ -5,7 +5,7 @@ class TTTBoard:
 
     def make_move(self, square_index, x_or_o):
         if not self._squares[square_index]:
-            self._squares[square_index] = 1 if x_or_o == 'X' else 2
+            self._squares[square_index] = 1 if x_or_o == b'X' else 2
             return True
         else:
             return False
@@ -24,7 +24,7 @@ class TTTBoard:
                  [2, 5, 8]]
         for combo in win:
             if {self._squares[i] for i in combo} in [{1}, {2}]:
-                return 'X' if self._squares[combo[0]] == 1 else 'O'
+                return b'X' if self._squares[combo[0]] == 1 else b'O'
         else:
             return False
 

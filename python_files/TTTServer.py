@@ -1,7 +1,7 @@
 import socket
 import threading
 from TTTBoard import TTTBoard
-
+from util import put_block, get_block
 
 def print_debug(*args):
     print('\nServer says: \t', ''.join([str(x) for x in args]))
@@ -23,30 +23,29 @@ class TTTSocketServer:
             print_debug('Server waiting for connection {} at address {}'.format(len(self.users), (self._sock.getsockname())))
             sc, sockname = self._sock.accept()
             print_debug('Accepted connection {} from {}.'.format(len(self.users), sockname))
-            sc.sendall(self.encode_message('Waiting for other players to connect.'))
-            self.users.append([sc, 'O'] if len(self.users) < 1 else [sc, 'X'])
+            put_block(sc, b'Waiting for other players')
+            self.users.append([sc, b'O'] if len(self.users) < 1 else [sc, b'X'])
         print_debug('All players connected; ready to start game')
-        self.send_message_all_users(self.encode_message('StartGame'))
+        self.send_message_all_users(b'StartGame')
 
         #self.user_values = {self.users[0]: 'X', self.users[1]: 'O'}
 
         #assign user1 and user2 values of X or O
         #O always goes first so keep ordered!
         for user in self.users:
-            user[0].sendall(self.encode_message(user[1]))
+            print_debug('Sending value {} to {}'.format(user[1], user[0]))
+            put_block(user[0], user[1])
+            #user[0].sendall(bytes(user[1]))
         # self.users[0].sendall(self.encode_message('<O>'))
         # self.users[1].sendall(self.encode_message('<X>'))
 
     def close(self):
-        print('Shutting down. Bye!')
+        print_debug('Server shutting down. Bye!')
         self._sock.close()
-
-    def encode_message(self, message):
-        return bytes((str(message)+'\n').encode('utf-8'))
 
     def send_message_all_users(self, message):
         for user in self.users:
-            user[0].sendall(message)
+            put_block(user[0], message)
 
     def run_game(self, steps=5):
         print_debug('Game is running')
@@ -59,29 +58,33 @@ class TTTSocketServer:
                     # deal with detected winner here
             step_counter += 1
         if step_counter < steps:
-            print('{} won!'.format(self.board.detect_winner()))
+            print_debug('{} won!'.format(self.board.detect_winner()))
         else:
-            print('Game exceeded steps {}'.format(step_counter))
-            self.send_message_all_users(self.encode_message('Game exiting'))
+            print_debug('Game exceeded steps {}'.format(step_counter))
+            self.send_message_all_users(b'Exiting')
         self.close()
 
     def take_turn(self, user):
         user_sock = user[0]
         print_debug('Waiting for user {} to move'.format(user[1]))
-        user_turn = user_sock.recv(2048).decode()
-        #print_debug('Attempting to take turn')
-        try:
-            user_turn = int(user_turn)
-            if not self.board.make_move(user_turn, user[1]):
-                user_sock.send('Invalid move. Try again')
-            else:
-                print(user[1],' chose square ', user_turn)
-                self.board.make_move(user_turn, user[1])
-                print('Board: ')
-                print(self.board.get_printable_board())
+        user_turn = get_block(user_sock)
+        #check to make sure user hasn't exited
+        if user_turn == b'Exiting':
+            print_debug('User {} has left the game'.format(user[1]))
+            put_block(list(filter(lambda x: x[0] != user_sock, self.users))[0], b'Exiting')
+            self.close()
+        else:
+            print_debug('Attempting to take turn {}'.format(user_turn))
+            try:
+                user_turn = int(user_turn.decode())
+                if not self.board.make_move(user_turn, user[1]):
+                    put_block(user_sock('Invalid move.'))
+                else:
+                    print_debug(user[1], ' chose square ', user_turn)
+                    print_debug('Board: ')
+                    print_debug(self.board.get_printable_board())
+                    other_user = list(filter(lambda x: x != user, self.users))[0][0]
+                    put_block(other_user, str(user_turn).encode('ascii'))
 
-                other_user = list(filter(lambda x: x != user, self.users))[0][0]
-                other_user.sendall(self.encode_message(user_turn))
-
-        except ValueError:
-            print_debug('could not convert int to value')
+            except ValueError:
+                print_debug('could not convert int to value')

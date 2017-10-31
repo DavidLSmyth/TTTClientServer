@@ -32,6 +32,7 @@ class TestTTTConnection(unittest.TestCase):
         server.run_game(no_rounds)
         if board_status == []:
             board_status.append(server.board)
+        server.close()
 
 
 
@@ -39,9 +40,21 @@ class TestTTTConnection(unittest.TestCase):
         '''creates raw sockets that attempt to connect to the server'''
         print('Thread2 running, waiting to connect')
         user1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        user1.connect(('localhost', 10000))
+        def connect(user):
+            user.connect(('localhost', 10000))
+
+        try:
+            connect(user1)
+        except ConnectionRefusedError as e:
+            print('Having trouble connecting user...')
+            connect(user1)
+
         user2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        user2.connect(('localhost', 10000))
+        try:
+            connect(user1)
+        except ConnectionRefusedError as e:
+            print('Having trouble connecting user...')
+            connect(user2)
         print('user1 and user2 have connected')
         user1_messages = []
         user2_messages = []

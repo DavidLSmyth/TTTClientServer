@@ -42,7 +42,6 @@ class TestTTTConnection(unittest.TestCase):
         user1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         def connect(user):
             user.connect(('localhost', 10000))
-
         try:
             connect(user1)
         except ConnectionRefusedError as e:
@@ -51,7 +50,7 @@ class TestTTTConnection(unittest.TestCase):
 
         user2 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
-            connect(user1)
+            connect(user2)
         except ConnectionRefusedError as e:
             print('Having trouble connecting user...')
             connect(user2)

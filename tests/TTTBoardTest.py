@@ -14,7 +14,8 @@ class TestTTTBoard(unittest.TestCase):
 
     def test_get_printable_board(self):
         self.assertEqual(self.my_board.get_printable_board(),
-                         ''' --- --- --- 
+                         '''
+ --- --- --- 
 |   |   |   | 
  --- --- --- 
 |   |   |   | 
@@ -24,7 +25,8 @@ class TestTTTBoard(unittest.TestCase):
 ''')
         self.assertTrue(self.my_board.make_move(0, 'X'))
         self.assertEqual(self.my_board.get_printable_board(),
-                         ''' --- --- --- 
+                         '''
+ --- --- --- 
 | X |   |   | 
  --- --- --- 
 |   |   |   | 
@@ -34,7 +36,8 @@ class TestTTTBoard(unittest.TestCase):
 ''')
         self.assertTrue(self.my_board.make_move(1, 'O'))
         self.assertEqual(self.my_board.get_printable_board(),
-                         ''' --- --- --- 
+                         '''
+ --- --- --- 
 | X | O |   | 
  --- --- --- 
 |   |   |   | 
@@ -44,7 +47,8 @@ class TestTTTBoard(unittest.TestCase):
 ''')
         self.assertTrue(self.my_board.make_move(7, 'X'))
         self.assertEqual(self.my_board.get_printable_board(),
-''' --- --- --- 
+                         '''
+ --- --- --- 
 | X | O |   | 
  --- --- --- 
 |   |   |   | 
@@ -83,7 +87,7 @@ class TestTTTBoard(unittest.TestCase):
         self.my_board.make_move(4, 'X')
         self.assertFalse(self.my_board.detect_winner())
         self.my_board.make_move(6, 'X')
-        #print(self.my_board.get_printable_board())
+        # print(self.my_board.get_printable_board())
         self.assertEqual(self.my_board.detect_winner(), 'X')
 
 

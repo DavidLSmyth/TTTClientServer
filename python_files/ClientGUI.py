@@ -9,7 +9,7 @@ class TTTClientGUI(TTTClient):
         self.parent.configure(bg="black")
         self.difficulty = tk.StringVar(self.parent)
         self.difficulty.set("hard")
-        self.optionmenu = tk.OptionMenu(root, self.difficulty, "easy", "hard")
+        self.optionmenu = tk.OptionMenu(self.parent, self.difficulty, "easy", "hard")
         self.optionmenu.configure(bg="khaki")
         self.optionmenu.grid(row=3, column=2)
 

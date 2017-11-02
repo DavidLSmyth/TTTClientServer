@@ -184,7 +184,7 @@ class TestTTTConnection(unittest.TestCase):
         t2.join()
         t3.join()
 
-        self.assertEqual(board[0]._squares, [1, 0, 0, 2, 0, 0, 0, 0, 0])
+        self.assertEqual(board[0]._squares, [b'X', 1, 2, b'O', 4, 5, 6, 7, 8])
         print('closing server')
 
     def test_TTT_game(self):
@@ -203,7 +203,7 @@ class TestTTTConnection(unittest.TestCase):
         t2.join()
         t3.join()
 
-        self.assertEqual(board[0]._squares, [1, 1, 1, 2, 0, 2, 0, 0, 2])
+        self.assertEqual(board[0]._squares, [b'X', b'X', b'X', b'O', 4, b'O', 6, 7, b'O'])
         self.assertTrue(board[0].detect_winner(), 'X')
         print('closing server')
 

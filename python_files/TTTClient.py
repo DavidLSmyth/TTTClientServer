@@ -6,7 +6,6 @@ from util import get_block, put_block, recvall
 def print_debug(*args):
     print('\nClient says: \t', ''.join([str(x) for x in args]))
 
-
 class TTTClient:
     def __init__(self, host, port):
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,7 +44,11 @@ class TTTClient:
     def __str__(self):
         return str(self.value)
 
-    def end_game(self):
+    def end_game(self, value):
+        if value == -1:
+            print_debug('You lost!')
+        elif value == -2:
+            print_debug('You drew!')
         print_debug('Game is over, {} is shutting down'.format(str(self.value)))
         print_debug('Goodbye!')
         self.close()
@@ -60,14 +63,16 @@ class TTTClient:
         if self.value == b'X':
             other_player_turn = self.other_player_turn()
         while True:
-            if self.my_turn() == -1:
+            value = self.my_turn()
+            if value:
                 break
             self.update()
             #updates gui to reflect new board state
-            if self.other_player_turn() == -1:
+            value = self.other_player_turn()
+            if value:
                 break
             self.update()
-        self.end_game()
+        self.end_game(value)
 
 
     def other_player_turn(self):
@@ -87,8 +92,9 @@ class TTTClient:
 
             print_debug(self.board.get_printable_board())
             if self.board.detect_winner():
-                print_debug('You lost!')
                 return -1
+            elif self.board.detect_draw():
+                return 0
 
     def get_input(self):
         inp = input('Please enter a valid move in range: \n{}\n'.format(self.board.get_available_squares()))
@@ -117,5 +123,6 @@ class TTTClient:
         print_debug('I am {}\n'.format(self), self.board.get_printable_board())
 
         if self.board.detect_winner():
-            print_debug('You won!')
-            return -1
+            return 1
+        elif self.board.detect_draw():
+            return 0

@@ -8,10 +8,12 @@ def print_debug(*args):
 
 class TTTClient:
     def __init__(self, host, port):
+        self.board = TTTBoard()
+        self.my_moves = []
+        self.opponent_moves = []
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         print_debug('Socket attempting to connect to host {}, port {}'.format(host, port))
         connected = False
-        self.received_moves = []
         while not connected:
             try:
                 self._sock.connect((host, port))
@@ -19,7 +21,7 @@ class TTTClient:
             except ConnectionRefusedError:
                 print_debug('connection was refused...')
                 time.sleep(0.5)
-
+        print('connected to socket, waiting for second player')
         message = get_block(self._sock)
         while message != b'StartGame':
             message = get_block(self._sock)
@@ -34,7 +36,6 @@ class TTTClient:
             self.board_value = 2 if self.value == b'O' else 1
             print_debug('Value for user: ', self)
 
-        self.board = TTTBoard()
         print_debug('Client has connected and been assigned socket name', self._sock.getsockname())
 
     def close(self):
@@ -45,9 +46,11 @@ class TTTClient:
         return str(self.value)
 
     def end_game(self, value):
-        if value == -1:
+        if value == 2:
+            print_debug('You won!')
+        if value == 1:
             print_debug('You lost!')
-        elif value == -2:
+        elif value == -1:
             print_debug('You drew!')
         print_debug('Game is over, {} is shutting down'.format(str(self.value)))
         print_debug('Goodbye!')
@@ -60,18 +63,18 @@ class TTTClient:
     def run_game(self):
         '''Once the game has been set up, runs until winner found'''
         # O always goes first
+        self.running = True
         if self.value == b'X':
             other_player_turn = self.other_player_turn()
-        while True:
+        while self.running:
             value = self.my_turn()
             if value:
-                break
+                self.running = False
             self.update()
             #updates gui to reflect new board state
             value = self.other_player_turn()
             if value:
-                break
-            self.update()
+                self.running = False
         self.end_game(value)
 
 
@@ -89,12 +92,12 @@ class TTTClient:
             except ValueError:
                 print_debug('Didnt get a valid integer from the server')
             self.board.make_move(move, b'X' if self.value == b'O' else b'O')
-
+            self.opponent_moves.append(move)
             print_debug(self.board.get_printable_board())
             if self.board.detect_winner():
-                return -1
+                return 1
             elif self.board.detect_draw():
-                return 0
+                return 2
 
     def get_input(self):
         inp = input('Please enter a valid move in range: \n{}\n'.format(self.board.get_available_squares()))
@@ -115,6 +118,7 @@ class TTTClient:
         inp = input_method()
         if 0 <= inp <= 9 and inp in self.board.get_available_squares():
             self.board.make_move(int(inp), self.value)
+            self.my_moves.append(int(inp))
         else:
             self.my_turn(input_method)
         # send input to server
@@ -123,6 +127,6 @@ class TTTClient:
         print_debug('I am {}\n'.format(self), self.board.get_printable_board())
 
         if self.board.detect_winner():
-            return 1
+            return 2
         elif self.board.detect_draw():
-            return 0
+            return -1

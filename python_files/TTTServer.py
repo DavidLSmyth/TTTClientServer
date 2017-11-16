@@ -74,11 +74,12 @@ class TTTSocketServer:
             put_block(list(filter(lambda x: x[0] != user_sock, self.users))[0], b'Exiting')
             self.close()
         else:
-            print_debug('Attempting to take turn {}'.format(user_turn))
+            print_debug('Attempting to take turn {}'.format(user_turn.decode()))
             try:
                 user_turn = int(user_turn.decode())
                 if not self.board.make_move(user_turn, user[1]):
-                    put_block(user_sock('Invalid move.'))
+                    #put_block(user_sock, b'Invalid move.')
+                    self.take_turn(user)
                 else:
                     print_debug(user[1], ' chose square ', user_turn)
                     print_debug('Board: ')

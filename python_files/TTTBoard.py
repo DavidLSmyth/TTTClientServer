@@ -2,6 +2,14 @@ class TTTBoard:
     def __init__(self):
         # 0 for not selected
         self._squares = [i for i in range(9)]
+        self.win_patterns = [[0, 1, 2],
+                 [3, 4, 5],
+                 [6, 7, 8],
+                 [0, 4, 8],
+                 [2, 4, 6],
+                 [0, 3, 6],
+                 [1, 4, 7],
+                 [2, 5, 8]]
 
     def make_move(self, square_index, x_or_o):
         if isinstance(self._squares[square_index], int):
@@ -17,15 +25,7 @@ class TTTBoard:
         return False if self.get_available_squares() else True
 
     def detect_winner(self):
-        win = [[0, 1, 2],
-                 [3, 4, 5],
-                 [6, 7, 8],
-                 [0, 4, 8],
-                 [2, 4, 6],
-                 [0, 3, 6],
-                 [1, 4, 7],
-                 [2, 5, 8]]
-        for combo in win:
+        for combo in self.win_patterns:
             if {self._squares[i] for i in combo} in [{b'X'}, {b'O'}]:
                 return self._squares[combo[0]]
         else:

@@ -5,10 +5,54 @@ import sys
 sys.path.append('../python_files')
 from python_files.TTTServer import TTTSocketServer
 from python_files.TTTClient import TTTClient
+from python_files.TTTBoard import TTTBoard
 from python_files.util import get_block, put_block
-from python_files.AIClient import AIBaseClient, OffensiveAI
+from python_files.AIClient import AIBaseClient, MinimaxAI, Minimax
+from collections import namedtuple
+
+
+AITestCase = namedtuple('AITestCase', 'board correct_move_x correct_move_o')
 
 class TestAIBaseClient(unittest.TestCase):
+
+    def setUp(self):
+        self.ai_test_cases = self.get_basic_ai_tests()
+
+    def get_basic_ai_tests(self):
+        #first basic test
+        ai_test_cases = []
+
+        board = TTTBoard()
+        board.make_move(0, b'X')
+        board.make_move(1, b'X')
+
+        board.make_move(4, b'O')
+        board.make_move(7, b'O')
+        correct_move_o = 2
+        correct_move_x = 2
+
+        ai_test_cases.append(AITestCase(board, correct_move_x, correct_move_o))
+
+        board = TTTBoard()
+        board.make_move(0, b'X')
+        board.make_move(6, b'X')
+
+        board.make_move(1, b'O')
+        board.make_move(3, b'O')
+        correct_move_o = 4
+        correct_move_x = 4
+        ai_test_cases.append(AITestCase(board, correct_move_x, correct_move_o))
+
+        return ai_test_cases
+
+    def test_basic_ai(self):
+        for test in self.ai_test_cases:
+            x_player = Minimax(b'X')
+            o_player = Minimax(b'O')
+            self.assertEqual(test.correct_move_x, x_player(test.board))
+            self.assertEqual(test.correct_move_o, o_player(test.board))
+
+
 
     def run_game(self, no_rounds, board_status: list = None):
         server = TTTSocketServer('localhost', 10000)
@@ -35,21 +79,23 @@ class TestAIBaseClient(unittest.TestCase):
         print('Closing client1')
         client1.close()
 
-    def test_TTT_round(self):
-        print('\n--------------------------\nRunning a test round of TTT \n')
-        moves = []
-        t1 = threading.Thread(target=self.run_game, args=(0,))
-        t2 = threading.Thread(target=self.connect_client,args=moves)
-        t3 = threading.Thread(target=self.connect_client,args=moves)
-        t2.start()
-        t3.start()
+    #def test_TTT_round(self):
+    #    print('\n--------------------------\nRunning a test round of TTT \n')
+    #    moves = []
+    #    t1 = threading.Thread(target=self.run_game, args=(0,))
+    #    t2 = threading.Thread(target=self.connect_client,args=moves)
+    #    t3 = threading.Thread(target=self.connect_client,args=moves)
+    #    t2.start()
+    #    t3.start()
 
-        t1.start()
-        t1.join()
+    #    t1.start()
+    #    t1.join()
 
-        t2.join()
-        t3.join()
-        print('moves: ')
-        print(moves)
+    #   t2.join()
+    #    t3.join()
+    #    print('moves: ')
+    #    print(moves)
+
+
 
 

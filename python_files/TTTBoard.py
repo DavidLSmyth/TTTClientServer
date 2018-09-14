@@ -11,8 +11,17 @@ class TTTBoard:
                  [1, 4, 7],
                  [2, 5, 8]]
 
-    def make_move(self, square_index, x_or_o):
+    def __str__(self):
+        return self.get_printable_board()
+
+    def is_valid_move(self, square_index):
         if isinstance(self._squares[square_index], int):
+            return True
+        else:
+            return False
+
+    def make_move(self, square_index, x_or_o):
+        if self.is_valid_move(square_index):
             self._squares[square_index] = x_or_o
             return True
         else:
@@ -25,6 +34,7 @@ class TTTBoard:
         return False if self.get_available_squares() else True
 
     def detect_winner(self):
+        '''Returns b'X' or b'O' if X or O has won, False otherwise'''
         for combo in self.win_patterns:
             if {self._squares[i] for i in combo} in [{b'X'}, {b'O'}]:
                 return self._squares[combo[0]]

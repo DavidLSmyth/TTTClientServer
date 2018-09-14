@@ -2,13 +2,15 @@ import socket
 import time
 from TTTBoard import TTTBoard
 from util import get_block, put_block, recvall
+from TTTPlayer import TTTPlayer
 
 def print_debug(*args):
     print('\nClient says: \t', ''.join([str(x) for x in args]))
 
 class TTTClient:
+    '''A class that handles TTT moves communicated from server'''
     def __init__(self, host, port):
-        self.board = TTTBoard()
+        #self.board = TTTBoard()
         self.my_moves = []
         self.opponent_moves = []
         self._sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,6 +38,7 @@ class TTTClient:
             self.board_value = 2 if self.value == b'O' else 1
             print_debug('Value for user: ', self)
 
+        self.TTTPlayer_me = TTTPlayer(self.value)
         print_debug('Client has connected and been assigned socket name', self._sock.getsockname())
 
     def close(self):
@@ -46,6 +49,10 @@ class TTTClient:
         return str(self.value)
 
     def end_game(self, value):
+        '''
+        :param value: 2 if won, 1 if lost, -1 if drew
+        :return:
+        '''
         if value == 2:
             print_debug('You won!')
         if value == 1:
@@ -91,16 +98,17 @@ class TTTClient:
                 move = int(move)
             except ValueError:
                 print_debug('Didnt get a valid integer from the server')
-            self.board.make_move(move, b'X' if self.value == b'O' else b'O')
+            self.TTTPlayer_me.make_move(move, b'X' if self.value == b'O' else b'O')
+            #self.board.make_move(move, b'X' if self.value == b'O' else b'O')
             self.opponent_moves.append(move)
-            print_debug(self.board.get_printable_board())
-            if self.board.detect_winner():
+            print_debug(self.TTTPlayer_me.board().get_printable_board())
+            if self.TTTPlayer_me.board().detect_winner():
                 return 1
-            elif self.board.detect_draw():
+            elif self.TTTPlayer_me.board().detect_draw():
                 return 2
 
     def get_input(self):
-        inp = input('Please enter a valid move in range: \n{}\n'.format(self.board.get_available_squares()))
+        inp = input('Please enter a valid move in range: \n{}\n'.format(self.TTTPlayer_me.board().get_available_squares()))
         try:
             inp = int(inp)
             if 0 <= inp <= 9:
@@ -116,17 +124,17 @@ class TTTClient:
             input_method = self.get_input
         #input_method must return an int
         inp = input_method()
-        if 0 <= inp <= 9 and inp in self.board.get_available_squares():
-            self.board.make_move(int(inp), self.value)
+        if 0 <= inp <= 9 and inp in self.TTTPlayer_me.board().get_available_squares():
+            self.TTTPlayer_me.board().make_move(int(inp), self.value)
             self.my_moves.append(int(inp))
         else:
             self.my_turn(input_method)
         # send input to server
         put_block(self._sock, bytes(str(inp).encode('ascii')))
 
-        print_debug('I am {}\n'.format(self), self.board.get_printable_board())
+        print_debug('I am {}\n'.format(self), self.TTTPlayer_me.board().get_printable_board())
 
-        if self.board.detect_winner():
+        if self.TTTPlayer_me.board().detect_winner():
             return 2
-        elif self.board.detect_draw():
+        elif self.TTTPlayer_me.board().detect_draw():
             return -1

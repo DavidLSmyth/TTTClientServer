@@ -1,15 +1,19 @@
 from TTTClient import TTTClient, print_debug
 import random
 import copy
+import time
 
 class AIBaseClient(TTTClient):
     '''Base Client class - simply chooses random square every time'''
     def __init__(self, host, port):
         super().__init__(host, port)
+        #pass
 
     def get_input(self):
         '''return the AI method here. Overrides the command line
         input in TTTClient'''
+        #give the illusion of considering possible moves...
+        time.sleep(1)
         return self.AI_get_move()
 
     def AI_get_move(self):
@@ -19,82 +23,101 @@ class AIBaseClient(TTTClient):
             random_move = random.randint(0, 9)
         return random_move
 
-    def get_move_values(self):
-        move_vals = {}
-        #for each possible move - if it results in a  win in one turn, assign a value of 1,
-        #if results in a win in current turn, assign a 2. If can never result in a win assign 0
 
-        #evaluate each move
-        for move in self.board.get_available_squares():
-            print_debug('evaluating move {}'.format(move))
-            board_copy = copy.deepcopy(self.board)
-            my_moves = self.my_moves + [move]
-            #print('my_moves: {}'.format(my_moves))
-            board_copy.make_move(move, self.value)
-            move_value = 0
-            for win_pattern in self.board.win_patterns:
-                if move in win_pattern:
-                    #print(board_copy.get_printable_board())
-                    #print(win_pattern)
-                    other_value = b'X' if self.value == b'O' else b'X'
-                    #an opponent move in the win pattern gives a win potential of 0
-                    if any(map(lambda opponent_move: opponent_move in win_pattern, self.opponent_moves)):
-                        #print('invalid win pattern: {}'.format(win_pattern))
-                        continue
-                    else:
-                        #print(list(map(lambda my_move: my_move in win_pattern, my_moves)))
-                        move_value += sum(map(lambda my_move: my_move in win_pattern, my_moves))
-                        #print('adding {} to move value'.format(sum(map(lambda my_move: my_move in win_pattern, my_moves))))
 
-            if move_value not in move_vals:
-                move_vals[move_value] = [move]
-            else:
-                move_vals[move_value].append(move)
+class Minimax:
+    def __init__(self, value):
+        '''
+        :param value: b'X' if I am playing as x, else b'O'
+        :param x_or_o: is it the turn of x or o
+        '''
+        self.my_value = value
 
-                # if move in win_pattern:
-                #     if other_value in list(map(lambda win_index: self.board.get_board()[win_index], win_pattern)):
-                #         print(list(map(lambda win_index: self.board.get_board()[win_index], win_pattern)))
-                #         move_vals[move] = 0
-                #     else:
-                #         s = sum(map(lambda square_index: self.board.get_board()[square_index] == self.value, win_pattern))
-                #         #print('value of move {} is {}'.format(move, s))
-                #         if s >= move_value:
-                #             best = s
-                #             move_vals[move] = best
-        best_moves = move_vals[max(move_vals.keys())]
-        print('Best move(s): {}'.format(best_moves))
-        print('move_vals: ', move_vals)
-        return move_vals
+    def __call__(self, state):
+        return self.minimax_decision(state, self.my_value)
 
-class OffensiveAI(AIBaseClient):
-    def __init__(self, host, port):
+    def result(self, state: 'TTTBoard', action: 'Board position to play', x_or_o):
+        '''Gives the board that results from action being performed in state'''
+        result_state = copy.deepcopy(state)
+        result_state.make_move(action, x_or_o)
+        return result_state
+
+
+    def get_alternate_value(self, x_or_o):
+        return b'X' if x_or_o == b'O' else b'O'
+
+    def minimax_decision(self, state, x_or_o) -> "a move":
+        '''
+        :param state: board state
+        :param x_or_o:
+        :return:
+        '''
+        actions = state.get_available_squares()
+        successor_states = [self.result(state, action, x_or_o) for action in actions]
+        successor_state_values = [self.min_value(successor_state, self.get_alternate_value(x_or_o)) for successor_state in successor_states]
+        #think it should be safe to get index of max value: if the are multiple max values tie-break by taking first returned
+        return actions[successor_state_values.index(max(successor_state_values))]
+
+    def terminal_test(self, state):
+        '''
+        :param state: board state
+        :return:
+        '''
+        if state.detect_winner() or state.detect_draw():
+            return self.get_utility(state)
+
+    def min_value(self, state, x_or_o):
+        '''
+        :param state: board state
+        :param x_or_o: whether it is the turn of x or o
+        :param my_value: whether I am x or O
+        :return: min value of the current state
+        '''
+        if state.detect_draw() or state.detect_winner():
+            return self.get_utility(state)
+        else:
+            value = 1000
+            #iterate through available actions and identify which action gives min payoff
+            for action in state.get_available_squares():
+                value = min(value, self.max_value(self.result(state, action, x_or_o), self.get_alternate_value(x_or_o)))
+                print('value: ', value)
+        return value
+
+    def max_value(self, state, x_or_o):
+        '''
+        :param state: TTTBoard (x_or_o should probably included with this
+        :param x_or_o: whether it is the turn of x or o
+        :param my_value: whether I am playing as x or o
+        :return:
+        '''
+        if state.detect_draw() or state.detect_winner():
+            return self.get_utility(state)
+        else:
+            value = -1000
+            # iterate through available actions and identify which action gives max payoff
+            for action in state.get_available_squares():
+                value = max(value, self.min_value(self.result(state, action, x_or_o), self.get_alternate_value(x_or_o)))
+                print('value: ', value)
+                    #copy.deepcopy(state).make_move(action,self.__get_alternate_value(x_or_o))))
+        return value
+
+    def get_utility(self, state: "TTTBoard"):
+        '''returns the utility of a terminal state'''
+        if state.detect_winner() == self.my_value:
+            return 1
+        #I have drawn
+        elif state.detect_draw():
+            return 0.5
+        #I have lost (a winner has been detected and it's not me!
+        elif state.detect_winner() and state.detect_winner() == self.get_alternate_value(self.my_value):
+            return 0
+
+
+class MinimaxAI(AIBaseClient):
+    def __init__(self, host, port, value):
         super().__init__(host, port)
-
-    def get_offensive_move(self):
-        '''Returns the best possible offensive move'''
-
-        move_values = self.get_move_values()
-        print_debug('returning optimal move as: {}'.format(move_values[max(move_values)]))
-        return move_values[max(move_values)][random.randint(0, len(move_values[max(move_values)])-1)]
+        self.value = value
+        self.strategy = Minimax(self.value)
 
     def AI_get_move(self):
-        '''Offensive moves have an associated payoff - make move
-        that maximises payoff'''
-        return self.get_offensive_move()
-
-
-class DefensiveAI(AIBaseClient):
-    def __init__(self, host, port):
-        super().__init__(host, port)
-
-    def AI_get_move(self):
-        '''Defensive moves have an associated payoff - make move
-        that maximises payoff'''
-
-class AI(AIBaseClient):
-    def __init__(self, host, port):
-        super().__init__(host, port)
-
-    def AI_get_move(self):
-        '''Defensive moves have an associated payoff - make move
-        that maximises payoff'''
+        self.strategy(self.value)
